@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<!-- <link href='/fullcalendar.css' rel='stylesheet' />
+<link href='/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+<script src='/moment.min.js'></script>
+<script src='/jquery.min.js'></script>
+<script src='/fullcalendar.min.js'></script>
+<script type="text/javascript" src="/js/script.js"></script>
+</head>
+<body>
+	<div id="forms">
+		<form name="newEvent" align="left">
+		    <input type="text" id="eventTitle" name="eventTitle" maxlength="50" placeholder="Enter an event title"><br>
+		    <input type="date" id="datePicker" name="datePicker"> Date<br>
+		    <input type="time" id="timePicker" name="timePicker"> Time<br>
+		    <input type="text" id="eventLoc" name="eventLoc" maxlength="100" placeholder="Enter an event location"><br>
+		    <textarea id="eventDes" name="eventDes" cols="20" rows="10" tabindex="101" placeholder="Enter an event description" maxlength="200"></textarea><br>
+		    <input type="button" onClick="addAnotherEvent()" value="Create New Event"> 
+		     <!-- need to add section for attending / email those attending -->
+		</form>
+
+	</div>
+<!-- info for the day from stranger populates beneath list, clicking item fills form -->
+</ul>
+</div>
+<button type="button" id="loadArticles">Load Articles</button>
+<div id="theLinks"></div>
+
+</body>
+</html>
+
+
+</body>
+</html>
