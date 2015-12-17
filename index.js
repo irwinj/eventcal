@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var $ = require('Cheerio');
 var session = require('express-session');
 var flash = require('connect-flash');
-
+var Sequelize = require('sequelize');
 var db = require('./models');
 //set database later
 
