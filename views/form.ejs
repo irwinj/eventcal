@@ -11,13 +11,14 @@
 </head>
 <body>
 	<div id="forms">
-		<form name="newEvent" align="left">
-		    <input type="text" id="eventTitle" name="eventTitle" maxlength="50" placeholder="Enter an event title"><br>
-		    <input type="date" id="datePicker" name="datePicker"> Date<br>
-		    <input type="time" id="timePicker" name="timePicker"> Time<br>
-		    <input type="text" id="eventLoc" name="eventLoc" maxlength="100" placeholder="Enter an event location"><br>
+		<form name="newEvent" form method="POST" align="left" action="/">
+		    <input type="text" id="eventTitle" name="title" maxlength="50" placeholder="Enter an event title"><br>
+		    <input type="date" id="datePicker" name="start"> Date<br>
+<!-- 		    <input type="time" id="timePicker" name="timePicker"> Time<br> -->
+		    <input type="text" id="eventLoc" name="description" maxlength="100" placeholder="Enter an event location"><br>
 		    <textarea id="eventDes" name="eventDes" cols="20" rows="10" tabindex="101" placeholder="Enter an event description" maxlength="200"></textarea><br>
-		    <input type="button" onClick="addAnotherEvent()" value="Create New Event"> 
+		    <input type="submit" class="btn btn-success" value="Add to calendar">
+<!-- 		    onClick="addAnotherEvent()" value="Create New Event">  -->
 		     <!-- need to add section for attending / email those attending -->
 		</form>
 

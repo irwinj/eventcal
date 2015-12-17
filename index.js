@@ -58,6 +58,21 @@ app.get('/form', function(req, res){
 	res.render('form')
 })
 
+app.post('/form', function(req, res) {
+  db.calendaritems.findOrCreate({
+    where: {
+      id: req.body.id
+      //serial id
+    },
+    defaults: {
+      title: req.body.title
+    }
+  }).spread(function(calendaritems, created) {
+    console.log(calendaritems.get());
+    res.redirect('/calendar');
+  })
+})
+
 app.get('/url', function(req, res){
   request('http://www.thestranger.com/events//2015-12-16', function (err, resp, html){
     if(!err && resp.statusCode == 200) {
