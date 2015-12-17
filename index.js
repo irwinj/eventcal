@@ -7,6 +7,7 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var Sequelize = require('sequelize');
 var db = require('./models');
+var moment = require('moment');
 //set database later
 
 app.set('view engine', 'ejs');
@@ -44,7 +45,17 @@ app.use('/',require('./controllers/main.js'));
 app.use('/auth',require('./controllers/auth.js'));
 
 app.get('/calendar', function(req, res){
-  res.render('selectable')
+  db.calendaritem.findAll().then(function(item){
+  console.log(item);
+  res.render('selectable', {item:item})
+  });
+});
+
+app.get('/api', function(req, res){
+  db.calendaritem.findAll().then(function(item){
+    console.log(item);
+  res.send(item);
+  });
 });
 
 // app.get('/calendar', function(req, res){
@@ -54,8 +65,8 @@ app.get('/calendar', function(req, res){
 //   //add database call, findAll events
 //   });
 
-app.get('/events', function(req, res){
-	res.render('events')
+app.get('/events/:date', function(req, res){
+	res.render('events', {date: req.params.date});
 })
 
 app.post('/events', function(req, res) {
@@ -81,21 +92,10 @@ app.post('/events', function(req, res) {
   })
 })
 
-app.get('/url', function(req, res){
-  request('http://www.thestranger.com/events//2015-12-16', function (err, resp, html){
+app.get('/url/:date', function(req, res){
+  request('http://www.thestranger.com/events//' + req.params.date, function (err, resp, html){
     if(!err && resp.statusCode == 200) {
       var parsedHTML = $.load(html);
-      // var linkArray = [{
-      //   link: 
-      //   headline: 
-      //   startTime:
-      // },
-      // {
-      // }]
-      // parsedHTML('.calendar-post').each(function(calendarPost) {
-      //   $(calendarPost).find('')
-      // });
-//TITLE START END URL LOCATION
       var linkArray = []
       parsedHTML('.calendar-post-title a').map(function(i, headline){
         var text = $(headline).attr('href');
@@ -108,12 +108,13 @@ app.get('/url', function(req, res){
           if(!(text)) return;
           textArray.push(text);
         });
-        var dateArray = []
-        //map returned value is new array, no need to push
-        parsedHTML('.calendar-post-date').map(function(i, headline) {
-          var newdate = $(headline).text().moment().format();
-          dateArray.push(newdate);
-        });
+        // var dateArray = []
+        // //map returned value is new array, no need to push
+        // parsedHTML('.calendar-post-date').map(function(i, headline) {
+        //   var newdate = $(headline).text();
+        //   moment(newdate).format();
+        //   dateArray.push(newdate);
+        // });
         var placeArray = []
         parsedHTML('.calendar-post-venue a').map(function(i, headline) {
           var locat = $(headline).text();
@@ -126,12 +127,9 @@ app.get('/url', function(req, res){
         // })
 
         // var goodDates = dateArray.map(formatDates);
-      console.log(placeArray);
       var linksAndHeadLines = {links: linkArray, headlines: textArray}
       res.send(linksAndHeadLines);
-      console.log(linksAndHeadLines);
       var dateAndPlace = {date: dateArray, place: placeArray}
-      console.log(dateAndPlace);
     }
   });
 });

@@ -8,11 +8,14 @@
 <script src='/jquery.min.js'></script>
 <script src='/fullcalendar.min.js'></script>
 <script>
-
+	var myEvents = <%- JSON.stringify(item) %>;
+</script>
+<script>
+console.log(myEvents)
 	$(document).ready(function() {
 			var currentDate = {time: moment()};
 			var time = currentDate.time;
-
+			//console.log($('#info').text())
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -24,6 +27,9 @@
 			//current day (date constructor for current day)
 			selectable: true,
 			selectHelper: true,
+			dayClick: function(date, jsEvent, view) {
+				window.location = '/events/' + date
+			},
 			select: function(start, end) {
 				//hard redirect to form event/new
 				//form date = start
@@ -41,67 +47,73 @@
 			},
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
-			events: [
+			events: myEvents
+			// title: myEvents.title,
+				// title: title,
+				// start: start,
+				// end: end
+				// url: localhost:3000/events/:id
+
 			//when JSON stringify, call events json
 			//form does a post, and database insert
 			//redirects to another route with database find (populates form)
 
 
-				{
-					title: 'All Day Event',
-					start: '2015-12-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2015-12-07',
-					end: '2015-12-10'
-				},
-				{
-					id: 999, //serial ID field for eventf
-					title: 'Repeating Event',
-					start: '2015-12-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2015-12-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2015-12-11',
-					end: '2015-12-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2015-12-12T10:30:00',
-					end: '2015-12-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2015-12-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2015-12-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2015-12-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2015-12-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2015-12-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2015-12-28'
-				}
-			]
+				// {
+				// 	title: 'All Day Event',
+				// 	start: '2015-12-01'
+				// },
+				// {
+				// 	title: 'Long Event',
+				// 	start: '2015-12-07',
+				// 	end: '2015-12-10'
+				// },
+				// {
+				// 	id: 999, //serial ID field for eventf
+			// 		title: 'Repeating Event',
+			// 		start: '2015-12-09T16:00:00'
+			// 	},
+			// 	{
+			// 		id: 999,
+			// 		title: 'Repeating Event',
+			// 		start: '2015-12-16T16:00:00'
+			// 	},
+			// 	{
+			// 		title: 'Conference',
+			// 		start: '2015-12-11',
+			// 		end: '2015-12-13'
+			// 	},
+			// 	{
+			// 		title: 'Meeting',
+			// 		start: '2015-12-12T10:30:00',
+			// 		end: '2015-12-12T12:30:00'
+			// 	},
+			// 	{
+			// 		title: 'Lunch',
+			// 		start: '2015-12-12T12:00:00'
+			// 	},
+			// 	{
+			// 		title: 'Meeting',
+			// 		start: '2015-12-12T14:30:00'
+			// 	},
+			// 	{
+			// 		title: 'Happy Hour',
+			// 		start: '2015-12-12T17:30:00'
+			// 	},
+			// 	{
+			// 		title: 'Dinner',
+			// 		start: '2015-12-12T20:00:00'
+			// 	},
+			// 	{
+			// 		title: 'Birthday Party',
+			// 		start: '2015-12-13T07:00:00'
+			// 	},
+			// 	{
+			// 		title: 'Click for Google',
+			// 		url: 'http://google.com/',
+			// 		start: '2015-12-28'
+			// 	}
+			// ]
 		});
 		
 	});
@@ -124,7 +136,8 @@
 </style>
 </head>
 <body>
-
+<!--<div id="info">
+	</div>-->
 	<div id='calendar'></div>
 
 </body>
