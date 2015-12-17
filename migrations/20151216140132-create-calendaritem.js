@@ -20,6 +20,9 @@ module.exports = {
       url: {
         type: Sequelize.STRING
       },
+      location: {
+        type: Sequelize.STRING
+      },
       description: {
         type: Sequelize.STRING
       },

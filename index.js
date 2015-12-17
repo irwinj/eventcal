@@ -54,21 +54,29 @@ app.get('/calendar', function(req, res){
 //   //add database call, findAll events
 //   });
 
-app.get('/form', function(req, res){
-	res.render('form')
+app.get('/events', function(req, res){
+	res.render('events')
 })
 
-app.post('/form', function(req, res) {
-  db.calendaritems.findOrCreate({
+app.post('/events', function(req, res) {
+  console.log(req.body);
+  console.log(req.body.timePicker);
+  db.calendaritem.findOrCreate({
     where: {
       id: req.body.id
       //serial id
     },
     defaults: {
-      title: req.body.title
+      title: req.body.title,
+      start: req.body.startDate + 'T' + req.body.startTime + ':00',
+      end: req.body.endDate + 'T' + req.body.endTime + ':00',
+      //account for null endtimes?
+      location: req.body.eventaddy,
+      description: req.body.description
+      // url: localhost:3000/calendar/:id,
     }
-  }).spread(function(calendaritems, created) {
-    console.log(calendaritems.get());
+  }).spread(function(calendaritem, created) {
+    console.log(calendaritem.get());
     res.redirect('/calendar');
   })
 })
@@ -77,6 +85,17 @@ app.get('/url', function(req, res){
   request('http://www.thestranger.com/events//2015-12-16', function (err, resp, html){
     if(!err && resp.statusCode == 200) {
       var parsedHTML = $.load(html);
+      // var linkArray = [{
+      //   link: 
+      //   headline: 
+      //   startTime:
+      // },
+      // {
+      // }]
+      // parsedHTML('.calendar-post').each(function(calendarPost) {
+      //   $(calendarPost).find('')
+      // });
+//TITLE START END URL LOCATION
       var linkArray = []
       parsedHTML('.calendar-post-title a').map(function(i, headline){
         var text = $(headline).attr('href');
@@ -85,12 +104,34 @@ app.get('/url', function(req, res){
       });
       var textArray = []
         parsedHTML('.calendar-post-title').map(function(i, headline){
-        var text = $(headline).text();
-        if(!(text)) return;
-        textArray.push(text);
-      });
+          var text = $(headline).text();
+          if(!(text)) return;
+          textArray.push(text);
+        });
+        var dateArray = []
+        //map returned value is new array, no need to push
+        parsedHTML('.calendar-post-date').map(function(i, headline) {
+          var newdate = $(headline).text().moment().format();
+          dateArray.push(newdate);
+        });
+        var placeArray = []
+        parsedHTML('.calendar-post-venue a').map(function(i, headline) {
+          var locat = $(headline).text();
+          placeArray.push(text);
+        });
+        // dateFormat().map()
+
+        // var newArray = oldArray.map(function(element) {
+        //   return DO SOMETHING TO THE OLD ELEMENT;
+        // })
+
+        // var goodDates = dateArray.map(formatDates);
+      console.log(placeArray);
       var linksAndHeadLines = {links: linkArray, headlines: textArray}
       res.send(linksAndHeadLines);
+      console.log(linksAndHeadLines);
+      var dateAndPlace = {date: dateArray, place: placeArray}
+      console.log(dateAndPlace);
     }
   });
 });
