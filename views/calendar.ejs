@@ -7,6 +7,7 @@
 <script src='/moment.min.js'></script>
 <script src='/jquery.min.js'></script>
 <script src='/fullcalendar.min.js'></script>
+<script src='/gcal.js'></script>
 <script>
 	var myEvents = <%- JSON.stringify(item) %>;
 </script>
@@ -16,6 +17,7 @@
 			var time = currentDate.time;
 			//console.log($('#info').text())
 		$('#calendar').fullCalendar({
+			googleCalendarApiKey: 'AIzaSyDYxcKKasXajc1_kdqf8phzowUDPpGLbHk',
 			header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -36,6 +38,8 @@
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: myEvents,
+			// events: 'testercles2@gmail.com',
+			//can't run 2 calendars at once
 			eventClick: function(event){
 				console.log(myEvents)
 			}
