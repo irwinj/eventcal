@@ -4,35 +4,31 @@
 <html>
 <head>
 <meta charset='utf-8' />
-<!-- <link href='/fullcalendar.css' rel='stylesheet' />
-<link href='/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+<link href='/fullcalendar.css' rel='stylesheet' />
+<link href='/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='/moment.min.js'></script>
 <script src='/jquery.min.js'></script>
 <script src='/fullcalendar.min.js'></script>
 <script type="text/javascript" src="/js/script.js"></script>
 </head>
 <body>
+<%= currentUser %>
 	<div id="forms">
 		<form name="newEvent" method="POST" align="left" action="/events">
 		    <input type="text" id="eventTitle" name="title" maxlength="50" placeholder="Enter an event title"><br>
-		    <input type="date" id="datePicker" name="startDate" value="<%= date %>"> Start Date<br>
-		 	<input type="time" id="timePicker" name="startTime"> Start Time<br>
-		 	<input type="date" id="datePicker" name="endDate"> End Date<br>
-		 	<input type="time" id="timePicker" name="endTime"> End Time<br>
+		    <input type="date" id="startDate" name="startDate" value="<%= date %>"> Start Date<br>
+		 	<input type="time" id="startTime" name="startTime"> Start Time<br>
+		 	<input type="date" id="endDate" name="endDate"> End Date<br>
+		 	<input type="time" id="endTime" name="endTime"> End Time<br>
 		    <input type="text" id="eventLoc" name="eventaddy" maxlength="100" placeholder="Enter an event location"><br>
 		    <textarea id="eventDes" name="description" cols="20" rows="10" tabindex="101" placeholder="Enter an event description" maxlength="200"></textarea><br>
 		    <input type="submit" class="btn btn-success" value="Add to calendar">
-<!-- 		    onClick="addAnotherEvent()" value="Create New Event">  -->
-		     <!-- need to add section for attending / email those attending -->
 		</form>
-
 	</div>
-<!-- info for the day from stranger populates beneath list, clicking item fills form -->
 </ul>
 </div>
-<button type="button" id="loadArticles">Load Articles</button>
+<button type="button" id="loadArticles">Stranger Events</button>
 <div id="theLinks"></div>
-
 </body>
 </html>
 

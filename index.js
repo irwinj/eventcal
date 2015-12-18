@@ -46,14 +46,12 @@ app.use('/auth',require('./controllers/auth.js'));
 
 app.get('/calendar', function(req, res){
   db.calendaritem.findAll().then(function(item){
-  console.log(item);
   res.render('selectable', {item:item})
   });
 });
 
 app.get('/api', function(req, res){
   db.calendaritem.findAll().then(function(item){
-    console.log(item);
   res.send(item);
   });
 });
@@ -70,8 +68,6 @@ app.get('/events/:date', function(req, res){
 })
 
 app.post('/events', function(req, res) {
-  console.log(req.body);
-  console.log(req.body.timePicker);
   db.calendaritem.findOrCreate({
     where: {
       id: req.body.id
@@ -87,7 +83,6 @@ app.post('/events', function(req, res) {
       // url: localhost:3000/calendar/:id,
     }
   }).spread(function(calendaritem, created) {
-    console.log(calendaritem.get());
     res.redirect('/calendar');
   })
 })
@@ -103,7 +98,7 @@ app.get('/url/:date', function(req, res){
         linkArray.push('http://thestranger.com' + text);
       });
       var textArray = []
-        parsedHTML('.calendar-post-title').map(function(i, headline){
+        parsedHTML('.calendar-post-title a').map(function(i, headline){
           var text = $(headline).text();
           if(!(text)) return;
           textArray.push(text);
@@ -116,9 +111,9 @@ app.get('/url/:date', function(req, res){
         //   dateArray.push(newdate);
         // });
         var placeArray = []
-        parsedHTML('.calendar-post-venue a').map(function(i, headline) {
-          var locat = $(headline).text();
-          placeArray.push(text);
+        parsedHTML('.calendar-post-venue a').map(function(i, locations) {
+          var locations = $(locations).text();
+          placeArray.push(locations);
         });
         // dateFormat().map()
 
@@ -127,9 +122,9 @@ app.get('/url/:date', function(req, res){
         // })
 
         // var goodDates = dateArray.map(formatDates);
-      var linksAndHeadLines = {links: linkArray, headlines: textArray}
+      var linksAndHeadLines = {links: linkArray, headlines: textArray, locations: placeArray}
       res.send(linksAndHeadLines);
-      var dateAndPlace = {date: dateArray, place: placeArray}
+      // var dateAndPlace = {date: dateArray, place: placeArray}
     }
   });
 });

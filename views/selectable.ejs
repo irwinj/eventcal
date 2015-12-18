@@ -11,7 +11,6 @@
 	var myEvents = <%- JSON.stringify(item) %>;
 </script>
 <script>
-console.log(myEvents)
 	$(document).ready(function() {
 			var currentDate = {time: moment()};
 			var time = currentDate.time;
@@ -28,7 +27,8 @@ console.log(myEvents)
 			selectable: true,
 			selectHelper: true,
 			dayClick: function(date, jsEvent, view) {
-				window.location = '/events/' + date
+				jsEvent.stopPropagation();
+				window.location = '/events/' + date.toISOString()
 			},
 			select: function(start, end) {
 				//hard redirect to form event/new
@@ -47,18 +47,29 @@ console.log(myEvents)
 			},
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
-			events: myEvents
+			events: myEvents,
+			eventClick: function(event){
+				console.log(moo)
+			}
+			// $('.events').click(){
+			// 	console.log(moo);
+			// }
+			// events.click(){
+			// 	console.log('beef')
+			// });
+		}); 
+		// $('.fc-event.container').click(function({
+		// 	console.log(moo)
+		// });
+	});
 			// title: myEvents.title,
 				// title: title,
 				// start: start,
 				// end: end
 				// url: localhost:3000/events/:id
-
 			//when JSON stringify, call events json
 			//form does a post, and database insert
 			//redirects to another route with database find (populates form)
-
-
 				// {
 				// 	title: 'All Day Event',
 				// 	start: '2015-12-01'
@@ -70,53 +81,6 @@ console.log(myEvents)
 				// },
 				// {
 				// 	id: 999, //serial ID field for eventf
-			// 		title: 'Repeating Event',
-			// 		start: '2015-12-09T16:00:00'
-			// 	},
-			// 	{
-			// 		id: 999,
-			// 		title: 'Repeating Event',
-			// 		start: '2015-12-16T16:00:00'
-			// 	},
-			// 	{
-			// 		title: 'Conference',
-			// 		start: '2015-12-11',
-			// 		end: '2015-12-13'
-			// 	},
-			// 	{
-			// 		title: 'Meeting',
-			// 		start: '2015-12-12T10:30:00',
-			// 		end: '2015-12-12T12:30:00'
-			// 	},
-			// 	{
-			// 		title: 'Lunch',
-			// 		start: '2015-12-12T12:00:00'
-			// 	},
-			// 	{
-			// 		title: 'Meeting',
-			// 		start: '2015-12-12T14:30:00'
-			// 	},
-			// 	{
-			// 		title: 'Happy Hour',
-			// 		start: '2015-12-12T17:30:00'
-			// 	},
-			// 	{
-			// 		title: 'Dinner',
-			// 		start: '2015-12-12T20:00:00'
-			// 	},
-			// 	{
-			// 		title: 'Birthday Party',
-			// 		start: '2015-12-13T07:00:00'
-			// 	},
-			// 	{
-			// 		title: 'Click for Google',
-			// 		url: 'http://google.com/',
-			// 		start: '2015-12-28'
-			// 	}
-			// ]
-		});
-		
-	});
 
 </script>
 <style>
