@@ -31,16 +31,6 @@
 				window.location = '/events/' + date.toISOString()
 			},
 			select: function(start, end) {
-				var title = prompt('Event Title:');
-				var eventData;
-				if (txitle) {
-					eventData = {
-						title: title,
-						start: start,
-						end: end
-					};
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
 				$('#calendar').fullCalendar('unselect');
 			},
 			editable: true,

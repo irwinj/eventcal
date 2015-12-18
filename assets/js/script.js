@@ -34,3 +34,11 @@ $(document).ready(function(){
 		});
 	});
 });
+
+function setAttending (email) {
+	var desc = $('#eventDes').val();
+	desc += ' ' + email + ',';
+	$('#eventDes').val(desc);
+	console.log(email);
+	console.log(email.findAll({attributes:['email']}))
+}
