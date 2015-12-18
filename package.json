@@ -16,6 +16,7 @@
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
+    "foreman": "^1.4.1",
     "pg": "^4.4.3",
     "pg-hstore": "^2.3.2",
     "request": "^2.67.0",

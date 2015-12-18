@@ -31,11 +31,9 @@
 				window.location = '/events/' + date.toISOString()
 			},
 			select: function(start, end) {
-				//hard redirect to form event/new
-				//form date = start
 				var title = prompt('Event Title:');
 				var eventData;
-				if (title) {
+				if (txitle) {
 					eventData = {
 						title: title,
 						start: start,
@@ -49,38 +47,10 @@
 			eventLimit: true, // allow "more" link when too many events
 			events: myEvents,
 			eventClick: function(event){
-				console.log(moo)
+				console.log(myEvents)
 			}
-			// $('.events').click(){
-			// 	console.log(moo);
-			// }
-			// events.click(){
-			// 	console.log('beef')
-			// });
 		}); 
-		// $('.fc-event.container').click(function({
-		// 	console.log(moo)
-		// });
 	});
-			// title: myEvents.title,
-				// title: title,
-				// start: start,
-				// end: end
-				// url: localhost:3000/events/:id
-			//when JSON stringify, call events json
-			//form does a post, and database insert
-			//redirects to another route with database find (populates form)
-				// {
-				// 	title: 'All Day Event',
-				// 	start: '2015-12-01'
-				// },
-				// {
-				// 	title: 'Long Event',
-				// 	start: '2015-12-07',
-				// 	end: '2015-12-10'
-				// },
-				// {
-				// 	id: 999, //serial ID field for eventf
 
 </script>
 <style>
@@ -100,8 +70,7 @@
 </style>
 </head>
 <body>
-<!--<div id="info">
-	</div>-->
+
 	<div id='calendar'></div>
 
 </body>

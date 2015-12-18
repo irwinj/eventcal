@@ -8,12 +8,10 @@ var flash = require('connect-flash');
 var Sequelize = require('sequelize');
 var db = require('./models');
 var moment = require('moment');
-//set database later
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/assets'));
-//assets can be any folder of my choosing
 app.use(session({
   secret:'hdsvhioadfgnioadfgnoidfagoibna',
   resave: false,
@@ -22,7 +20,6 @@ app.use(session({
 app.use(flash());
 
 app.use(function(req,res,next){
-  // req.session.user = 8;
   if(req.session.user){
     db.user.findById(req.session.user).then(function(user){
       req.currentUser = user;
@@ -46,7 +43,7 @@ app.use('/auth',require('./controllers/auth.js'));
 
 app.get('/calendar', function(req, res){
   db.calendaritem.findAll().then(function(item){
-  res.render('selectable', {item:item})
+  res.render('calendar', {item:item})
   });
 });
 
@@ -56,18 +53,21 @@ app.get('/api', function(req, res){
   });
 });
 
-// app.get('/calendar', function(req, res){
-//   db.event.findAll().then(function(events) {
-//     res.render('selectable', {events: events});
-//   });
-//   //add database call, findAll events
-//   });
-
 app.get('/events/:date', function(req, res){
 	res.render('events', {date: req.params.date});
 })
 
 app.post('/events', function(req, res) {
+
+  var startTime = req.body.startDate;
+  if(req.body.startTime) {
+    startTime += "T" + req.body.startTime + ":00";
+  }
+  var endTime = req.body.endDate;
+  if(req.body.endTime){
+    endTime += "T" + req.body.endTime + ":00";
+  }
+
   db.calendaritem.findOrCreate({
     where: {
       id: req.body.id
@@ -75,9 +75,8 @@ app.post('/events', function(req, res) {
     },
     defaults: {
       title: req.body.title,
-      start: req.body.startDate + 'T' + req.body.startTime + ':00',
-      end: req.body.endDate + 'T' + req.body.endTime + ':00',
-      //account for null endtimes?
+      start: startTime,
+      end: endTime,
       location: req.body.eventaddy,
       description: req.body.description
       // url: localhost:3000/calendar/:id,
@@ -103,28 +102,13 @@ app.get('/url/:date', function(req, res){
           if(!(text)) return;
           textArray.push(text);
         });
-        // var dateArray = []
-        // //map returned value is new array, no need to push
-        // parsedHTML('.calendar-post-date').map(function(i, headline) {
-        //   var newdate = $(headline).text();
-        //   moment(newdate).format();
-        //   dateArray.push(newdate);
-        // });
         var placeArray = []
         parsedHTML('.calendar-post-venue a').map(function(i, locations) {
           var locations = $(locations).text();
           placeArray.push(locations);
         });
-        // dateFormat().map()
-
-        // var newArray = oldArray.map(function(element) {
-        //   return DO SOMETHING TO THE OLD ELEMENT;
-        // })
-
-        // var goodDates = dateArray.map(formatDates);
       var linksAndHeadLines = {links: linkArray, headlines: textArray, locations: placeArray}
       res.send(linksAndHeadLines);
-      // var dateAndPlace = {date: dateArray, place: placeArray}
     }
   });
 });
