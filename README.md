@@ -9,7 +9,7 @@ The Seattle Event Calendar attempts to replicate the way that my friends share i
 
 Front end: Javascript, jQuery, AJAX, Bootstrap
 
-Back end: Node, Express, Sequelize
+Back end: Node, Express, Sequelize, PostgreSQL
 
 Node modules: Cheerio, Express-Session, Moment, Fullcalendar, Flash
 
